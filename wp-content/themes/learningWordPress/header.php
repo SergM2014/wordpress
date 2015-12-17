@@ -24,6 +24,7 @@
                 <?php
 
                 $args = array(
+                    //location of the current menu ihthe template
                     'theme_location'=> 'primary'
                 );
 
