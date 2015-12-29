@@ -14,28 +14,33 @@
     <div class="container">
 
         <!--site-header -->
-        <header class="site-header">
-            <!-- returns url of main page-->
-            <h1><a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a></h1>
-            <h5><?php bloginfo('description'); ?>
+            <header class="site-header">
 
-            <?php if(is_page('portfolio')) { ?>
-                --Thank you for viewing our work
+                <div class="hd-search">
+                    <?php get_search_form(); ?>
+                </div>
 
-            <?php } ?>
-            </h5>
+                <!-- returns url of main page-->
+                <h1><a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a></h1>
+                <h5><?php bloginfo('description'); ?>
 
-            <nav class="site-nav">
+                <?php if(is_page('portfolio')) { ?>
+                    --Thank you for viewing our work
 
-                <?php
+                <?php } ?>
+                </h5>
 
-                $args = array(
-                    //location of the current menu in the template
-                    'theme_location'=> 'primary'
-                );
+                <nav class="site-nav">
 
-                wp_nav_menu($args); ?>
-            </nav>
+                    <?php
+
+                    $args = array(
+                        //location of the current menu in the template
+                        'theme_location'=> 'primary'
+                    );
+
+                    wp_nav_menu($args); ?>
+                </nav>
 
 
-        </header><!-- /site-header -->
+            </header><!-- /site-header -->
