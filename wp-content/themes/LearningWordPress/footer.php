@@ -39,6 +39,7 @@
         </nav>
 
         <p><?php bloginfo('name'); ?> -&copy; <?php echo date('Y'); ?></p>
+        <div class="copyright"><?php echo get_theme_mod('copyright_details'); ?></div>
     </footer>
 
     </div><!-- /container-->

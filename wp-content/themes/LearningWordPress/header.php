@@ -16,6 +16,10 @@
         <!--site-header -->
             <header class="site-header">
 
+                <div class="">
+                    <a href="<?php echo get_option('home'); ?>"><img src="<?php echo get_theme_mod('logo_image'); ?>"</a>
+                </div>
+
                 <div class="hd-search">
                     <?php get_search_form(); ?>
                 </div>

@@ -168,3 +168,103 @@ function learningWordPress_customize_css(){?>
 <?php }
 
 add_action('wp_head', 'learningWordPress_customize_css');
+
+function gamesquare_customizer_register($wp_customize){
+    $wp_customize->add_section('gamesquare_colors', array(
+        'title'=>__('Colors of tutorials', 'LearningWordPress'),
+        'description'=>'Modify the theme colors',
+        'priority'=>30,
+    ));
+
+    $wp_customize->add_setting('background_color', array(
+        'default'=> '#fff',
+    ));
+
+    $wp_customize->add_setting('link_color', array(
+        'default'=> '#4b4b4b',
+    ));
+
+    $wp_customize->add_setting('link_background_color', array(
+        'default'=> '#4b4b4b',
+    ));
+
+    $wp_customize->add_setting('link_background_hover', array(
+        'default'=> '#56c928',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'background_color', array(
+        'label'=>__('Edit Background Color', 'learningWordPress'),
+        'section'=> 'gamesquare_colors',
+        'settings'=> 'background_color'
+    )));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_color', array(
+        'label'=>__('Edit link Color', 'LearningWordPress'),
+        'section'=> 'gamesquare_colors',
+        'settings'=> 'link_color'
+    )));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_background_color', array(
+        'label'=>__('Edit link BackgroundColor', 'LearningWordPress'),
+        'section'=> 'gamesquare_colors',
+        'settings'=> 'link_background_color'
+    )));
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'link_background_color_hover', array(
+        'label'=>__('Edit link Hover', 'LearningWordPress'),
+        'section'=> 'gamesquare_colors',
+        'settings'=> 'link_background_hover'
+    )));
+
+    //start image settings
+    $wp_customize->add_section('gamesquare_images', array(
+        'title'=>__('Images', 'LearningWordPress'),
+        'description'=>'Modify the images/logos'
+    ));
+    $wp_customize->add_setting('logo_image', array(
+      'default'=>'http://wordpress/wp-content/themes/LearningWordPress/img/may_be_logo.jpg',
+
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'logo_image', array(
+        'label'=>__('Edit log images', 'LearningWordPress'),
+        'section'=> 'gamesquare_images',
+        'settings'=> 'logo_image'
+    )));
+
+    //start copyright settings
+    $wp_customize->add_section('gamesquare_copyright', array(
+        'title'=>__('Copyright Details', 'LearningWordPress'),
+        'description'=>'Add/Edit copyright'
+    ));
+    $wp_customize->add_setting('copyright_details', array(
+        'default'=>'&copy; 2016 Your Company',
+
+    ));
+
+    $wp_customize->add_control( 'copyrights_details', array(
+        'label'=>__('Copyright Information', 'LearningWordPress'),
+        'section'=> 'gamesquare_copyright',
+        'settings'=> 'copyright_details'
+    ));
+}
+add_action ('customize_register', 'gamesquare_customizer_register');
+
+function gamesquare_css_customiser(){
+    ?>
+
+    <style type="text/css">
+        body { background-color: #<?php echo get_theme_mod('background_color'); ?>; }
+        .main-nav a {
+            color: <?php echo get_theme_mod('link_color'); ?>;
+            background-color: <?php echo get_theme_mod('link_background_color'); ?> ;
+        }
+        .main-nav a:hover{
+            background-color: <?php echo get_theme_mod('link_background_hover'); ?>;
+        }
+    </style>
+
+<?php
+}
+
+add_action('wp_head', 'gamesquare_css_customiser');
