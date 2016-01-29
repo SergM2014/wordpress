@@ -1,0 +1,89 @@
+<?php
+/*
+Plugin name:Избранные рубрики
+Description:Плагинсоздает виджет позволяющий вывести последние записи из выбраных рубрик
+Plugin URI: http://#
+Author:Me
+Author URI: http://#
+Version: 1.0
+*/
+
+add_action('widgets_init', 'wfm_cats');
+
+function wfm_cats(){
+    register_widget('WFM_Cats');
+}
+
+class WFM_Cats extends WP_Widget{
+
+    public function __construct(){
+        $args=array(
+            'name'=> 'Избранные рубрики*',
+            'description'=>'Виджет выводит последние записи выбраных рубрик'
+    );
+        parent::__construct('wfm-cats', '', $args );
+    }
+
+    public function form($instance){
+
+        $count= isset($instance['count'])? $instance['count']: 5;
+
+        $cats= get_categories();
+//возвращает массив обьектов содержащих информацию  о категориях
+        //get_field_id найшов таку функцию лише у выджетах
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('count'); ?>">Кол-во записей для вывода</label>
+            <input type="text" name="<?php echo $this->get_field_name('count'); ?>" id="<?php echo $this->get_field_id('count'); ?>"
+                   value="<?php echo $count; ?>" class="widefat" >
+        </p>
+
+        <?php
+        echo "<p>";
+        foreach ($cats as $cat){
+        ?>
+        <input type="checkbox" name="<?php echo $this->get_field_name('inc'); ?>[]" id="<?php echo $this->get_field_id('inc').$cat->cat_ID; ?>" value="<?php echo $cat->cat_ID; ?>"
+            <?php if(is_array($instance['inc']) && in_array($cat->cat_ID, $instance['inc'])) echo "checked"; ?> >
+        <label for="<?php echo $this->get_field_id('inc').$cat->cat_ID; ?>"><?php echo $cat->name; ?></label> <br>
+        <?php
+
+        }
+        echo "</p>";
+    }
+    //output of widget on the site
+//$args оформление темы
+    public function widget($args, $instance){
+      //  var_dump($args);
+        if(!empty($instance['inc'])){
+            foreach($instance['inc'] as $cat_id){
+                $cat = get_category($cat_id);
+                global $post;
+               $posts= get_posts(
+                   array(
+                      'category'=>$cat_id,
+                       'numberposts'=>$instance['count']
+                   )
+               );
+                echo '<div class="widget">';
+                echo "<h2>{$cat->name}</h2>";
+                echo '<ul>';
+                foreach($posts as $post){
+                    setup_postdata($post);
+                    echo '<li><a href="'.get_permalink().'">'.get_the_title().'</a></li>';
+                }
+                wp_reset_postdata();
+                echo '</ul>';
+                echo '</div>';
+            }
+        }
+    }
+
+
+    public function update($new_instance, $old_instance){
+        $new_instance['count']= ((int)$new_instance['count'])? abs($new_instance['count']):4;
+        foreach ($new_instance['inc'] as $k => $v){
+            $new_instance['inc'][$k]= (int)$v;
+        }
+        return $new_instance;
+    }
+}
