@@ -9,10 +9,28 @@
  * License:GPLv2
  */
 //delete news in admin page
-function dwwp_remove_dashboard_widget(){
-   /* Удаляет Блоки на страницах редактирования/создания постов, постоянных страниц, ссылок
-    и произвольных типов записей. */
-    remove_meta_box('dashboard_primary', 'dashboard', 'side');
+
+
+function remove_dashboard_widgets(){
+      // Quick Press
+
+    remove_meta_box('dashboard_primary', 'dashboard', 'side');   // WordPress blog
+
+// use 'dashboard-network' as the second parameter to remove widgets from a network dashboard.
 }
-add_action('wp_dashboard_setup', 'dwwp_remove_dashboard_widget');
+add_action('wp_dashboard_setup', 'remove_dashboard_widgets');
+
+function dwwp_add_google_link(){
+    global $wp_admin_bar;
+
+    $wp_admin_bar->add_menu(array(
+        'id'    =>'google_analytics',
+        'title' =>'Google analytics',
+        'href'  =>'http://google.com/analytics'
+
+    ));
+
+}
+
+add_action('wp_before_admin_bar_render', 'dwwp_add_google_link');
 
