@@ -32,7 +32,7 @@ function dwwp_meta_callback($post){
                 <label for="date-listed" class="dwwp-row-title">Date Listed</label>
             </div>
             <div class="meta-td">
-                <input type="text" name="date_listed" id="date-listed" value="<?php if(!empty ($dwwp_stored_meta['date_listed']))
+                <input type="text" size="10" class="dwwp-row-content datepicker" name="date_listed" id="date-listed" value="<?php if(!empty ($dwwp_stored_meta['date_listed']))
                     echo esc_attr($dwwp_stored_meta['date_listed'][0] ); ?>">
             </div>
         </div>
@@ -42,7 +42,7 @@ function dwwp_meta_callback($post){
                 <label for="application-deadline" class="dwwp-row-title">Application Deadline</label>
             </div>
             <div class="meta-td">
-                <input type="text" name="application_deadline" id="application-deadline" value="<?php if(!empty ($dwwp_stored_meta['application_deadline']))
+                <input type="text" size="10" class="dwwp-row-content datepicker" name="application_deadline" id="application-deadline" value="<?php if(!empty ($dwwp_stored_meta['application_deadline']))
                     echo esc_attr($dwwp_stored_meta['application_deadline'][0] ); ?>">
             </div>
         </div>
