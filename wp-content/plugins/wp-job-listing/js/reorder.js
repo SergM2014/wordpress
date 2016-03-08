@@ -13,16 +13,24 @@ jQuery(document).ready(function($){
                 type:'POST',
                 dataType:'json',
                 data:{
-                    action: 'save_post',
-                    order: sortList.sortable('toArray').toString()
+                    action: 'save_sort',
+                    order: sortList.sortable('toArray'),
+                    security: WP_JOB_LISTING.security
                 },
                 success: function(response){
+                    $('div#message').remove();
                    animation.hide();
-                    pageTitle.after('<div id="message" class="updated "><p>Jobs sort order has benn saved</p></div>');
+                    if(true === response.success){
+                        pageTitle.after('<div id="message" class="updated "><p>'+WP_JOB_LISTING.success+'</p></div>');
+                    } else {
+                        pageTitle.after('<div id="message" class="error "><p>'+WP_JOB_LISTING.failure+'</p></div>');
+                    }
+
                 },
                 error: function(error){
+                    $('div#message').remove();
                     animation.hide();
-                   pageTitle.after('<div id="message" class="error "><p>There was an error saving the sort order, or you do not have the permission</p></div>');
+                   pageTitle.after('<div id="message" class="error "><p>'+WP_JOB_LISTING.failure+'</p></div>');
                 }
 
 

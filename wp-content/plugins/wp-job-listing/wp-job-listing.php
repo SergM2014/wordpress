@@ -16,6 +16,7 @@ if(!defined('ABSPATH')){
 require_once(plugin_dir_path(__FILE__).'wp-job-cpt.php');
 require_once (plugin_dir_path(__FILE__).'wp-job-settings.php');
 require_once (plugin_dir_path(__FILE__).'wp-job-fields.php');
+require_once (plugin_dir_path(__FILE__).'wp-job-shortcode.php');
 
 
 function dwwp_admin_enqueue_scripts(){
@@ -35,6 +36,11 @@ function dwwp_admin_enqueue_scripts(){
 
     if($pagenow == "edit.php" && $typenow == 'job'){
         wp_enqueue_script('reorder-js', plugins_url('js/reorder.js', __FILE__), array('jquery', 'jquery-ui-sortable'), '20150026', true );
+        wp_localize_script('reorder-js','WP_JOB_LISTING', array(
+            'security'=> wp_create_nonce('wp-job-order'),
+            'success'=>'Jobs sort order has benn saved',
+            'failure'=>'There was an error saving the sort order, or you do not have the permission'
+        ));
     }
 
 }

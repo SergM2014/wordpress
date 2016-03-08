@@ -54,3 +54,33 @@ function reorder_admin_jobs_callback(){
     <?php
 
 }
+
+
+function dwwp_save_reorder(){
+
+  if(! check_ajax_referer('wp-job-order', 'security')){
+      return wp_send_json_error('Invalid Nonce');
+  }
+    if(! current_user_can('manage_options')){
+        return wp_send_json_error('You are not allow to do this.');
+    }
+    $order = $_POST['order'];
+    $counter = 0;
+
+    foreach($order as $item_id){
+
+        $post= array(
+            'ID'=>(int)$item_id,
+            'menu_order'=> $counter,
+
+        );
+
+        wp_update_post($post);
+        $counter++;
+    }
+
+    wp_send_json_success('post_saved');
+
+}
+
+add_action('wp_ajax_save_sort', 'dwwp_save_reorder');
