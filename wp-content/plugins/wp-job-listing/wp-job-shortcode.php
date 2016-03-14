@@ -88,6 +88,20 @@ function dwwp_list_job_by_location($atts, $content=null ){
 
      endif;
      wp_reset_postdata();
+
+    if($jobs_by_location->max_num_pages>1 && is_page()){
+
+        $display_by_location.= '<nav class="prev-next-posts">';
+        $display_by_location.= '<div class="nav-previous">';
+        $display_by_location.= get_next_post_link(__('<span class="meta-nav">&larr;</span> Previous'), $jobs_by_location->max_num_pages);
+        $display_by_location.= '</div>';
+        $display_by_location.='<div class="next-posts-link">';
+        $display_by_location.= get_previous_posts_link(__('<span class="meta-nav">&rarr;</span> Next'));
+        $display_by_location.= '</div>';
+        $display_by_location.= '</nav>';
+
+    }
+
     return $display_by_location;
 }
 
